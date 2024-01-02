@@ -11,11 +11,11 @@ spec:
   maxReplicas: 3
   metrics:
     - type: Resource
-  resource:
-    name: cpu
-    target:
-      type: Utilization
-      averageUtilization: 50
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
   # status:
   #   observedGeneration: 1
   #   lastScaleTime: <some-time>
