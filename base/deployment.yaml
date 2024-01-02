@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: foo/bar:latest
+          image: app:latest
           resources:
             limits:
               cpu: ".5"

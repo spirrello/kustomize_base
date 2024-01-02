@@ -22,7 +22,3 @@ patches:
         value: "backend-api"
     target:
       name: frontend
-  # - patch: |-
-  #     - op: replace
-  #       path: "/spec/template/spec/containers/image"
-  #       value: "nginx:1.14.2"
