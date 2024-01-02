@@ -12,13 +12,13 @@ labels:
     includeTemplates: true
     pairs:
       app: backend-api
-# patches:
-# - path: hpa.yaml
-#   target:
-#     kind: HorizontalPodAutoscaler
-# - patch: |-
-#     - op: replace
-#       path: "/metadata/name"
-#       value: "backend-api"
-#   target:
-#     name: frontend
+patches:
+  - patch: |-
+      - op: replace
+        path: "/metadata/name"
+        value: "backend-api"
+    target:
+      name: frontend
+  # - path: hpa.yaml
+  #   target:
+  #     kind: HorizontalPodAutoscaler
