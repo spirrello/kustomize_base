@@ -80,3 +80,29 @@ spec:
       averageUtilization: 70
       type: Utilization
 ```
+
+
+
+# ArgoCD Deployment
+
+
+Build kind cluster
+
+```
+kind create cluster --config cluster.yaml
+```
+
+
+```
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+```
+
+Get the initial password:
+
+```
+argocd admin initial-password -n argocd
+```
