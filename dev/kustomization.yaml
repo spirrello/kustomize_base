@@ -4,21 +4,21 @@ resources:
   - git@github.com:spirrello/kustomize_base.git/base
 namespace: backend-api-dev
 images:
-  - name: foo/bar
+  - name: app
     newName: nginx
-    newTag: 1.14.2
+    newTag: 1.15.0
 labels:
-  - pairs:
-      app: backend-api
-    includeSelectors: true
+  - includeSelectors: true
     includeTemplates: true
-patches:
-  - path: hpa.yaml
-    target:
-      kind: HorizontalPodAutoscaler
-  - patch: |-
-      - op: replace
-        path: "/metadata/name"
-        value: "backend-api"
-    target:
-      name: frontend
+    pairs:
+      app: backend-api
+# patches:
+# - path: hpa.yaml
+#   target:
+#     kind: HorizontalPodAutoscaler
+# - patch: |-
+#     - op: replace
+#       path: "/metadata/name"
+#       value: "backend-api"
+#   target:
+#     name: frontend
