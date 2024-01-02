@@ -4,11 +4,14 @@ metadata:
   name: frontend
 spec:
   template:
-  spec:
-    containers:
-      - name: app
-        image: foo/bar:latest
-        ports:
-          - name: http
-            containerPort: 8080
-            protocol: TCP
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: app
+          image: foo/bar:latest
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
