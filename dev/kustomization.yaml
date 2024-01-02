@@ -3,6 +3,10 @@ kind: Kustomization
 resources:
   - git@github.com:spirrello/kustomize_base.git/base
 namespace: backend-api-dev
+images:
+  - name: foo/bar
+    newName: nginx
+    newTag: 1.14.2
 labels:
   - pairs:
       app: backend-api
@@ -18,3 +22,7 @@ patches:
         value: "backend-api"
     target:
       name: frontend
+  # - patch: |-
+  #     - op: replace
+  #       path: "/spec/template/spec/containers/image"
+  #       value: "nginx:1.14.2"

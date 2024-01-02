@@ -3,6 +3,9 @@ kind: Deployment
 metadata:
   name: frontend
 spec:
+  selector:
+    matchLabels:
+      app: frontend
   template:
     metadata:
       labels:
@@ -11,6 +14,10 @@ spec:
       containers:
         - name: app
           image: foo/bar:latest
+          resources:
+            limits:
+              cpu: ".5"
+              memory: "128Mi"
           ports:
             - name: http
               containerPort: 8080
