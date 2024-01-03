@@ -1,10 +1,10 @@
 # kustomize_base
 
 
-## This is an example repo for using kustomize to manage K8s manifests.
+## This is an example repo for using kustomize to manage K8s manifests and deploying to ArgoCD.
 
 
-## Testing
+## Setup a test cluster
 
 Setup a test cluster with `Kind`.
 
@@ -52,10 +52,39 @@ This is a single repo but the idea is to treat the `dev` as a directory living i
 
 ### Example
 
-```
-cd dev/
+## Deploy ArgoCD
 
-kustomize build
+
+```
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+```
+
+Get the initial password:
+
+```
+argocd admin initial-password -n argocd
+```
+
+browse to https://localhost:8080
+
+## Deploy the sample app
+
+
+Deploy via ArgoCD...the following builds the app definition within ArgoCD and it will then proceed
+with syncing the K8s manifests to the cluster.
+
+```
+kubectl apply -f kustomize/backend-api/dev/app.yaml
+```
+
+To see the manifest that `kustomize` will generate:
+```
+kustomize build kustomize/backend-api/dev
+
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -88,20 +117,24 @@ spec:
   selector:
     matchLabels:
       app: backend-api
-  spec:
-    containers:
-    - image: foo/bar:latest
-      name: app
-      ports:
-      - containerPort: 8080
-        name: http
-        protocol: TCP
   template:
     metadata:
       labels:
         app: backend-api
+    spec:
+      containers:
+      - image: nginx:1.15.0
+        name: backend-api
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: ".5"
+            memory: 128Mi
 ---
-apiVersion: autoscaling/v2beta2
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
@@ -109,43 +142,17 @@ metadata:
   name: backend-api
   namespace: backend-api-dev
 spec:
-  apiVersion: apps/v1
-  kind: Deployment
   maxReplicas: 10
   metrics:
-  - type: Resource
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 70
+        type: Utilization
+    type: Resource
   minReplicas: 1
-  name: frontend
-  resource:
-    name: cpu
-    target:
-      averageUtilization: 70
-      type: Utilization
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend-api
 ```
-
-
-
-# ArgoCD Deployment
-
-
-Build kind cluster
-
-```
-kind create cluster --config cluster.yaml
-```
-
-
-```
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
-
-kubectl port-forward svc/argocd-server -n argocd 8080:443
-```
-
-Get the initial password:
-
-```
-argocd admin initial-password -n argocd
-```
-
