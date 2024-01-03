@@ -1,0 +1,26 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: service-xyz
+  namespace: default
+spec:
+  interval: 5m0s
+  url: https://github.com/spirrello/kustomize_base.git
+  ref:
+    branch: master
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: service-xyz
+  namespace: default
+spec:
+  interval: 10m
+  targetNamespace: default
+  sourceRef:
+    kind: GitRepository
+    name: service-xyz
+  path: "./kustomize/service_xyz/dev"
+  prune: true
+  timeout: 1m
