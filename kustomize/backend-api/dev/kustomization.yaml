@@ -7,6 +7,7 @@ resources:
   - https://github.com/spirrello/kustomize_base.git/kustomize/hpa_cpu
   # - ../../base
   # - ../../hpa_cpu
+  - flux_app.yaml
 namespace: backend-api-dev
 images:
   - name: app
