@@ -1,0 +1,34 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - git@github.com:spirrello/kustomize_base.git/kustomize/base
+  - git@github.com:spirrello/kustomize_base.git/kustomize/hpa_cpu
+  # - ../../base
+  # - ../../hpa_cpu
+namespace: backend-api-dev
+images:
+  - name: app
+    newName: nginx
+    newTag: 1.15.0
+labels:
+  - includeSelectors: true
+    includeTemplates: true
+    pairs:
+      app: backend-api
+patches:
+  - patch: |-
+      - op: replace
+        path: "/metadata/name"
+        value: "backend-api"
+    target:
+      name: frontend
+  - patch: |-
+      - op: replace
+        path: "/spec/template/spec/containers/0/name"
+        value: "backend-api"
+    target:
+      kind: Deployment
+      name: frontend
+  - path: hpa.yaml
+    target:
+      kind: HorizontalPodAutoscaler
