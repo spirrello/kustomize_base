@@ -149,11 +149,3 @@ Get the initial password:
 argocd admin initial-password -n argocd
 ```
 
-
-# Install Flux
-
-https://docs.gitops.weave.works/docs/open-source/getting-started/install-OSS/
-
-```
-brew install fluxcd/tap/flux
-```
