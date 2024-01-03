@@ -16,7 +16,7 @@ labels:
       app: backend-api
 patches:
   - patch: |-
-      - op: replace
+      - op: add
         path: "/metadata/name"
         value: "backend-api"
     target:
