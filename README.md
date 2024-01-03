@@ -4,9 +4,12 @@
 ## This is an example repo for using kustomize to manage K8s manifests.
 
 
-## Directories
+## K8s Config Architecture
 
 This is a single repo but the idea is to treat the `dev` as a directory living in a source code repo and the `base` directory living in a **remote** mono repo of some sort that can be treated as a resuable template for many micro services.
+
+![image](docs/img/kustomize.jpg)
+
 
 ### Example
 
@@ -105,4 +108,13 @@ Get the initial password:
 
 ```
 argocd admin initial-password -n argocd
+```
+
+
+# Install Flux
+
+https://docs.gitops.weave.works/docs/open-source/getting-started/install-OSS/
+
+```
+brew install fluxcd/tap/flux
 ```
