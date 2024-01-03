@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - https://github.com/spirrello/kustomize_base.git/kustomize/base
   - https://github.com/spirrello/kustomize_base.git/kustomize/hpa_cpu
-  - flux_app.yaml
 namespace: backend-api-dev
 images:
   - name: app
