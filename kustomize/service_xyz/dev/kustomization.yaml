@@ -1,8 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - git@github.com:spirrello/kustomize_base.git/kustomize/base
-  - git@github.com:spirrello/kustomize_base.git/kustomize/hpa_cpu
+  # - git@github.com:spirrello/kustomize_base.git/kustomize/base
+  # - git@github.com:spirrello/kustomize_base.git/kustomize/hpa_cpu
+  - https://github.com/spirrello/kustomize_base.git/kustomize/base
+  - https://github.com/spirrello/kustomize_base.git/kustomize/hpa_cpu
   # - ../../base
   # - ../../hpa_cpu
 namespace: backend-api-dev
