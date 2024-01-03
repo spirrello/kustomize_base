@@ -31,10 +31,10 @@ patches:
   - path: hpa.yaml
     target:
       kind: HorizontalPodAutoscaler
-  - patch: |-
-      - op: replace
-        path: "/spec/targetNamespace"
-        value: "backend-api-dev"
-    target:
-      kind: Kustomization
-      name: backend-api
+  # - patch: |-
+  #     - op: replace
+  #       path: "/spec/targetNamespace"
+  #       value: "backend-api-dev"
+  #   target:
+  #     kind: Kustomization
+  #     name: backend-api
