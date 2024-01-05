@@ -7,7 +7,7 @@ namespace: backend-api-dev
 images:
 - name: app
   newName: nginx
-  newTag: perl
+  newTag: 1.25-perl
 labels:
 - includeSelectors: true
   includeTemplates: true
